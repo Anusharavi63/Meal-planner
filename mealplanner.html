@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Planner</title>
+  <style>
+    /* CSS */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    form input, form select, form button {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    form button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #218838;
+    }
+
+    .meal-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .meal-list li {
+      background: #f4f4f4;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .meal-list li .meal-info {
+      display: flex;
+      gap: 10px;
+    }
+
+    .meal-list li button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .meal-list li button:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Meal Planner</h1>
+
+    <!-- Form to Add Meals -->
+    <form id="mealForm">
+      <input type="text" id="mealName" placeholder="Meal Name" required>
+      <select id="mealDay">
+        <option value="" disabled selected>Select Day</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+      </select>
+      <button type="submit">Add Meal</button>
+    </form>
+
+    <!-- Meal List -->
+    <ul class="meal-list" id="mealList">
+      <!-- Meals will be dynamically added here -->
+    </ul>
+  </div>
+
+  <script>
+    // JavaScript
+    const mealForm = document.getElementById("mealForm");
+    const mealList = document.getElementById("mealList");
+
+    // Handle form submission
+    mealForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent form from refreshing the page
+
+      const mealName = document.getElementById("mealName").value;
+      const mealDay = document.getElementById("mealDay").value;
+
+      if (mealName && mealDay) {
+        // Create a meal item
+        const mealItem = document.createElement("li");
+        mealItem.innerHTML = `
+          <div class="meal-info">
+            <strong>${mealDay}:</strong> ${mealName}
+          </div>
+          <button class="delete-btn">Remove</button>
+        `;
+
+        // Add remove functionality
+        mealItem.querySelector(".delete-btn").addEventListener("click", function () {
+          mealList.removeChild(mealItem);
+        });
+
+        // Add meal to the list
+        mealList.appendChild(mealItem);
+
+        // Clear the form inputs
+        document.getElementById("mealName").value = "";
+        document.getElementById("mealDay").value = "";
+      }
+    });
+  </script>
+
+</body>
+</html>
